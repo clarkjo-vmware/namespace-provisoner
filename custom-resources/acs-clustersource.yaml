@@ -1,0 +1,19 @@
+#! variables that need to be externally configurable
+#! are specified in a data values schema file
+
+#@ load("@ytt:data", "data")
+#@ if hasattr(data.values, "acs") and 'clustersource' in data.values.acs:
+#@ end
+---
+apiVersion: "config.apps.tanzu.vmware.com/v1alpha4"
+kind: ConfigurationSource
+metadata:
+  name: cook-config-source
+spec:
+  backends:
+    - type: git
+      uri: https://github.com/spring-cloud-services-samples/cook-config
+    - type: git
+      uri: https://github.com/myorg/config-repo
+    - type: git
+      uri: https://github.com/another/another-config-repo
