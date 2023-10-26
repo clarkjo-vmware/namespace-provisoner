@@ -7,3 +7,10 @@ namespaces:
 - name: dev
   secretmanager: ["aws"]
   acs: ["clustersource"]
+
+- name: test-app
+  serviceaccount: ["eso-irsa"]
+  secretstore: ["aws"]
+  configsource: ["app1"]
+  configslice: ["app1"]
+  externalsecret: ["app1"]

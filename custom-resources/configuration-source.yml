@@ -1,0 +1,24 @@
+#! variables that need to be externally configurable
+#! are specified in a data values schema file
+
+#@ load("@ytt:data", "data")
+#@ def in_list(key, list):
+#@  return hasattr(data.values.tap_values, key) and (data.values.tap_values[key] in list)
+#@ end
+#@ if/end in_list('profile', ['run']) and hasattr(data.values, "configsource") and 'app1' in data.values.configusource:
+---
+apiVersion: "config.apps.tanzu.vmware.com/v1alpha4"
+kind: ConfigurationSource
+metadata:
+  name: configuration-source-name
+spec:
+  backends:
+    - type: git
+      uri: <git-location>
+      defaultLabel: master
+      secretRef:
+        name: <git-secret>
+        namespace: dev
+      searchPaths:
+        - app-path  
+        

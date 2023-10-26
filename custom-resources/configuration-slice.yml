@@ -1,0 +1,22 @@
+#! variables that need to be externally configurable
+#! are specified in a data values schema file
+
+#@ load("@ytt:data", "data")
+#@ def in_list(key, list):
+#@  return hasattr(data.values.tap_values, key) and (data.values.tap_values[key] in list)
+#@ end
+#@ if/end in_list('profile', ['run']) and hasattr(data.values, "configslice") and 'app1' in data.values.configslice:
+---
+apiVersion: "config.apps.tanzu.vmware.com/v1alpha4"
+kind: ConfigurationSlice
+metadata:
+  name: config-slice-name
+spec:
+  interval: 30s
+  mutable: true
+  configMapName: configmap-name
+  configMapStrategy: tree
+  createSecretsOnly: false
+  configurationSource: acs-source
+  content:
+    - application
